@@ -76,6 +76,26 @@ A nextjs app (client & server) that is backed by a postgres db. The app and the 
 - Job-Description table (id, user-id, description-text, create-date, update-date)
 - Analysis table (user-id, resume-id, job-description-id, analysis-json)
 
+- USER table
+This will be more useful post-MVP, but having it now sets up a good framework.
+    - Columns: id, username
+
+- RESUME table
+    - Resumes can be inserted and update. For the MVP, there will just be a single resume. The user will create it and then possibly update. Later versions may need a resume-type column, e.g. for a single user who is applying for both tech and medical jobs.
+    - Columns: id, user_id (FK), resume_text, create-date, update-date
+
+- JOBS table
+Jobs can be inserted and updated. For the MVP, there will be just one job
+    - Columns: id, job_text, create-date, update-date
+
+- ANALYSIS table
+Stores the results of comparing a resume to a job description
+    - Columns: id, resume_id (FK), job_id (FK), ai-results (structured JSON), create-date, model_metadata
+
+### Open Question
+
+For the MVP, resumes and job descriptions may be updated in place. A later version may add version history so previous drafts and analyses can be preserved.
+
 ## AI Provider Strategy
 
 - There needs to be an abstraction layer so models can be swapped out.
