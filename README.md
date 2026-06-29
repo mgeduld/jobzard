@@ -77,7 +77,7 @@ A nextjs app (client & server) that is backed by a postgres db. The app and the 
 - Analysis table (user-id, resume-id, job-description-id, analysis-json)
 
 - USER table
-This will be more useful post-MVP, but having it now sets up a good framework.
+This will be more useful post-MVP (e.g. for auth), but having it now sets up a good framework.
     - Columns: id, username
 
 - RESUME table
