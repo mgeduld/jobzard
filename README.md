@@ -71,21 +71,35 @@ A nextjs app (client & server) that is backed by a postgres db. The app and the 
 
 ## Data Model Draft
 
-- USERS table
-This will be more useful post-MVP (e.g. for auth), but having it now sets up a good framework. We will probably want to add columns like email and password eventually.
-    - Columns: id, username
+* `users`
 
-- RESUMES table
-    - Resumes can be inserted and update. For the MVP, there will just be a single resume. The user will create it and then possibly update. Later versions may need a resume-type column, e.g. for a single user who is applying for both tech and medical jobs.
-    - Columns: id, user_id (FK), resume_text, create_date, update_date
+  * Represents the local user of the app.
+  * This will be more useful post-MVP, especially if authentication is added later, but having it now gives the schema a realistic shape.
+  * Later versions may add columns such as `email`, `password_hash`, or external auth-provider IDs.
+  * Columns: `id`, `username`, `created_at`
 
-- JOB_DESCRIPTIONS table
-Jobs can be inserted and updated. For the MVP, there will be just one job
-    - Columns: id, user_id (FK), job_text, create_date, update_date
+* `resumes`
 
-- ANALYSIS_RUNS table
-Stores the results of comparing a resume to a job description
-    - Columns: id, resume_id (FK), job_description_id (FK), ai_results (structured JSON), create_date, model_metadata
+  * Stores resume text entered or pasted by the user.
+  * Resumes can be inserted and updated.
+  * For the MVP, there will be a single resume, but the schema allows for more later.
+  * Later versions may add a resume type or label, such as `software_engineering`, `management`, or `technical_writing`.
+  * Columns: `id`, `user_id` FK, `resume_text`, `created_at`, `updated_at`
+
+* `job_descriptions`
+
+  * Stores job descriptions entered or pasted by the user.
+  * Job descriptions can be inserted and updated.
+  * For the MVP, there will be a single job description, but the schema allows for more later.
+  * Columns: `id`, `user_id` FK, `job_text`, `created_at`, `updated_at`
+
+* `analysis_runs`
+
+  * Stores the result of comparing a resume to a job description.
+  * Each analysis run references the specific resume and job description that were analyzed.
+  * The AI result is stored as structured JSON.
+  * Columns: `id`, `resume_id` FK, `job_description_id` FK, `ai_result_json`, `model_metadata`, `created_at`
+
 
 ### Open Question
 
