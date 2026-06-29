@@ -128,3 +128,40 @@ For the MVP, resumes and job descriptions may be updated in place. A later versi
 - Postgres
 - Node + npm
 
+## Initial Backlog
+
+### 1. Project setup
+- Create Next.js app with TypeScript
+- Add basic folder structure
+- Add Material UI
+- Add Docker Compose with Postgres
+- Add environment-variable handling
+
+### 2. Database foundation
+- Choose migration tool
+- Create initial schema for `users`, `resumes`, `job_descriptions`, and `analysis_runs`
+- Seed one local development user
+- Add database connection helper
+
+### 3. Resume and job-description CRUD
+- Create UI for editing one resume
+- Create UI for editing one job description
+- Save both to Postgres
+- Reload saved data on app restart
+
+### 4. AI provider abstraction
+- Define an interface for analysis providers
+- Implement a mock provider first
+- Return fixed structured JSON for tests and UI development
+
+### 5. Analyze Fit flow
+- Add Analyze Fit button
+- Send selected resume and job description to provider
+- Save analysis result in `analysis_runs`
+- Display result in the UI
+
+### 6. Basic tests
+- Test database utility functions where practical
+- Test mock provider
+- Test analysis result parsing/validation
+- Add at least one component or integration test around the Analyze Fit flow
