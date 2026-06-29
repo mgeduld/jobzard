@@ -134,33 +134,45 @@ For the MVP, resumes and job descriptions may be updated in place. A later versi
 - Create Next.js app with TypeScript
 - Add basic folder structure
 - Add Material UI
-- Add Docker Compose with Postgres
 - Add environment-variable handling
+- Add `.gitignore` entries for local secrets
 
-### 2. Database foundation
-- Choose migration tool
+### 2. Local database setup
+- Add Docker Compose with Postgres
+- Add `.env.local` with `DATABASE_URL`
+- Confirm local connection with `psql`
+- Add a small Node script to test the `pg` connection
+
+### 3. Database schema and migrations
+- Choose a lightweight migration approach for raw SQL
 - Create initial schema for `users`, `resumes`, `job_descriptions`, and `analysis_runs`
+- Add a first SQL migration for the MVP tables
 - Seed one local development user
-- Add database connection helper
 
-### 3. Resume and job-description CRUD
+### 4. Database access layer
+- Install and configure `pg`
+- Add database connection helper
+- Add small query functions for resumes, job descriptions, and analysis runs
+
+### 5. Resume and job-description CRUD
 - Create UI for editing one resume
 - Create UI for editing one job description
 - Save both to Postgres
 - Reload saved data on app restart
+- Allow updating existing saved text
 
-### 4. AI provider abstraction
+### 6. AI provider abstraction
 - Define an interface for analysis providers
 - Implement a mock provider first
 - Return fixed structured JSON for tests and UI development
 
-### 5. Analyze Fit flow
+### 7. Analyze Fit flow
 - Add Analyze Fit button
 - Send selected resume and job description to provider
 - Save analysis result in `analysis_runs`
 - Display result in the UI
 
-### 6. Basic tests
+### 8. Basic tests
 - Test database utility functions where practical
 - Test mock provider
 - Test analysis result parsing/validation
