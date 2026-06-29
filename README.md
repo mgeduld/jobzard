@@ -71,21 +71,21 @@ A nextjs app (client & server) that is backed by a postgres db. The app and the 
 
 ## Data Model Draft
 
-- USER table
-This will be more useful post-MVP (e.g. for auth), but having it now sets up a good framework.
+- USERS table
+This will be more useful post-MVP (e.g. for auth), but having it now sets up a good framework. We will probably want to add columns like email and password eventually.
     - Columns: id, username
 
-- RESUME table
+- RESUMES table
     - Resumes can be inserted and update. For the MVP, there will just be a single resume. The user will create it and then possibly update. Later versions may need a resume-type column, e.g. for a single user who is applying for both tech and medical jobs.
-    - Columns: id, user_id (FK), resume_text, create-date, update-date
+    - Columns: id, user_id (FK), resume_text, create_date, update_date
 
-- JOB_DESCRIPTION table
+- JOB_DESCRIPTIONS table
 Jobs can be inserted and updated. For the MVP, there will be just one job
-    - Columns: id, user_id, job_text, create-date, update-date
+    - Columns: id, user_id (FK), job_text, create_date, update_date
 
-- ANALYSIS table
+- ANALYSIS_RUNS table
 Stores the results of comparing a resume to a job description
-    - Columns: id, resume_id (FK), job_description_id (FK), ai-results (structured JSON), create-date, model_metadata
+    - Columns: id, resume_id (FK), job_description_id (FK), ai_results (structured JSON), create_date, model_metadata
 
 ### Open Question
 
