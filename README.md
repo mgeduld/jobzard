@@ -47,6 +47,15 @@ NOTE: possibly if a user updates a resume or description, new record should be i
 - Authentication
 - Full application history
 - Hosted deployment
+- User notes
+
+## Future AI/RAG Direction
+
+The MVP will start with direct resume/job-description analysis: the app sends the selected resume and job description to an AI provider and stores the structured result.
+
+Later versions may add document chunking, embeddings, pgvector, and semantic retrieval so the app can search across many job-search documents and answer questions using only relevant source material.
+
+RAG is not required to analyze one resume against one job description. RAG becomes useful when the app has too much material to send everything to the model.
 
 ## Tech Stack
 
