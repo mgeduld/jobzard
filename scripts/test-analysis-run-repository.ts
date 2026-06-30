@@ -1,6 +1,6 @@
 import "dotenv/config";
 import {
-    createAnalysisRunParams,
+    createAnalysisRun,
     getLatestAnalysisRunForResumeAndJobDescription, 
 } from "../src/lib/repositories/analysisRuns";
 
@@ -29,7 +29,7 @@ async function main() {
     }
 
     // Create analysis run parameters
-    const analysisRunParams = await createAnalysisRunParams({
+    const analysisRunParams = await createAnalysisRun({
         resumeId: currentResume.id, 
         jobDescriptionId: currentJobDescription.id, 
         aiResultJson: {

@@ -11,7 +11,7 @@ export type AnalysisRun = {
     updatedAt: Date;
 }
 
-export async function createAnalysisRunParams( params: { 
+export async function createAnalysisRun( params: { 
     resumeId: number; 
     jobDescriptionId: number; 
     aiResultJson: ResumeJobAnalysis; 

@@ -8,6 +8,22 @@ export type JobDescription = {
     updatedAt: Date;
 }
 
+export async function getJobDescriptionById(jobDescriptionId: number): Promise<JobDescription | null> {
+    const result = await db.query<JobDescription>(
+        `SELECT 
+            id, 
+            user_id AS "userId",
+            job_text AS "jobText",
+            created_at AS "createdAt",
+            updated_at AS "updatedAt"
+         FROM job_descriptions
+         WHERE id = $1`,
+        [jobDescriptionId]
+    );
+
+    return result.rows[0] ?? null;
+}   
+
 export async function getCurrentJobDescriptionForUser(userId: number): Promise<JobDescription | null> {
     const result = await db.query<JobDescription>(
         `SELECT 

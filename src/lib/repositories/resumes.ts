@@ -8,6 +8,22 @@ export type Resume = {
     updatedAt: Date;
 }
 
+export async function getResumeById(resumeId: number): Promise<Resume | null> {
+    const result = await db.query<Resume>(
+        `SELECT 
+            id, 
+            user_id AS "userId",
+            resume_text AS "resumeText",
+            created_at AS "createdAt",
+            updated_at AS "updatedAt"
+         FROM resumes
+         WHERE id = $1`,
+        [resumeId]
+    );
+
+    return result.rows[0] ?? null;
+}
+
 export async function getCurrentResumeForUser(userId: number): Promise<Resume | null> {
     const result = await db.query<Resume>(
         `SELECT 

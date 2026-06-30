@@ -15,7 +15,8 @@
     "db:test:resume": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-resume-repository.ts",
     "db:test:job-description": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-job-description-repository.ts",
     "db:test:analysis-run": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-analysis-run-repository.ts",
-    "ai:test:mock": "tsx scripts/test-mock-analysis-provider.ts"
+    "ai:test:mock": "tsx scripts/test-mock-analysis-provider.ts",
+    "app:test:analyze-fit-service": "DOTENV_CONFIG_PATH=.env.local tsx -r dotenv/config scripts/test-analyze-fit-service.ts"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
