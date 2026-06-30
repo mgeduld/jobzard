@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:migrate": "docker exec -i jobzard-postgres psql -U jobzard -d jobzard_dev < db/migrations/001_initial_schema.sql",
+    "db:seed": "docker exec -i jobzard-postgres psql -U jobzard -d jobzard_dev < db/seeds/001_seed_dev_user.sql",
+    "db:wait": "until docker exec jobzard-postgres pg_isready -U jobzard -d jobzard_dev; do sleep 1; done",
+    "db:reset": "docker compose down -v && docker compose up -d && npm run db:wait && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
     "next": "16.2.9",
