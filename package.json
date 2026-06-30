@@ -11,7 +11,9 @@
     "db:seed": "docker exec -i jobzard-postgres psql -U jobzard -d jobzard_dev < db/seeds/001_seed_dev_user.sql",
     "db:wait": "until docker exec jobzard-postgres pg_isready -U jobzard -d jobzard_dev; do sleep 1; done",
     "db:reset": "docker compose down -v && docker compose up -d && npm run db:wait && npm run db:migrate && npm run db:seed",
-    "db:test": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-db-connection.ts"
+    "db:test": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-db-connection.ts",
+    "db:test:resume": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-resume-repository.ts",
+    "db:test:job-description": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-job-description-repository.ts"
   },
   "dependencies": {
     "dotenv": "^17.4.2",

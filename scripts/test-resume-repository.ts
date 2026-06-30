@@ -1,6 +1,7 @@
+import "dotenv/config";
 import { 
     getCurrentResumeForUser,
-    updateResumeForUser,
+    upsertResumeForUser,
 } from "../src/lib/repositories/resumes";
 
 async function main() {
@@ -10,9 +11,9 @@ async function main() {
     const currentResume = await getCurrentResumeForUser(userId);
     console.log("Current Resume:", currentResume);
 
-    // Test updating the resume for the user
-    const newResumeText = "This is updated resume text.";
-    const updatedResume = await updateResumeForUser(userId, newResumeText);
+    // Test upserting the resume for the user
+    const newResumeText = `This is updated resume text. (${new Date().toISOString()})`;
+    const updatedResume = await upsertResumeForUser(userId, newResumeText);
     console.log("Updated Resume:", updatedResume);
 
     process.exit(1);

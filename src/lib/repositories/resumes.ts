@@ -26,7 +26,7 @@ export async function getCurrentResumeForUser(userId: number): Promise<Resume | 
     return result.rows[0] ?? null;
 }
 
-export async function updateResumeForUser(userId: number, resumeText: string): Promise<Resume> {
+export async function upsertResumeForUser(userId: number, resumeText: string): Promise<Resume> {
     const existingResume = await getCurrentResumeForUser(userId);
 
     if (!existingResume) {

@@ -1,5 +1,4 @@
 import "dotenv/config";
-import { db } from "../src/lib/db";
 import { getUserByUsername } from "../src/lib/repositories/users";
 
 async function main() {
