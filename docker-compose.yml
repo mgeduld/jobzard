@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: jobzard-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: jobzard
+      POSTGRES_PASSWORD: jobzard_dev_password
+      POSTGRES_DB: jobzard_dev
+    volumes:
+      - jobzard_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  jobzard_postgres_data:
