@@ -13,7 +13,8 @@
     "db:reset": "docker compose down -v && docker compose up -d && npm run db:wait && npm run db:migrate && npm run db:seed",
     "db:test": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-db-connection.ts",
     "db:test:resume": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-resume-repository.ts",
-    "db:test:job-description": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-job-description-repository.ts"
+    "db:test:job-description": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-job-description-repository.ts",
+    "db:test:analysis-run": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-analysis-run-repository.ts"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
