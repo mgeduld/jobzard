@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "DOTENV_CONFIG_PATH=.env.local vitest",
+    "test:run": "DOTENV_CONFIG_PATH=.env.local vitest run",
     "db:migrate": "docker exec -i jobzard-postgres psql -U jobzard -d jobzard_dev < db/migrations/001_initial_schema.sql",
     "db:seed": "docker exec -i jobzard-postgres psql -U jobzard -d jobzard_dev < db/seeds/001_seed_dev_user.sql",
     "db:wait": "until docker exec jobzard-postgres pg_isready -U jobzard -d jobzard_dev; do sleep 1; done",
@@ -33,6 +35,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tsx": "^4.22.4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.9"
   }
 }
