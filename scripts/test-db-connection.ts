@@ -1,10 +1,11 @@
 import "dotenv/config";
 import { db } from "../src/lib/db";
+import { getUserByUsername } from "../src/lib/repositories/users";
 
 async function main() {
-    const result = await db.query("SELECT username FROM users LIMIT 1");
+    const user = await getUserByUsername("local-dev-user");
 
-    console.log("Database connection successful. Sample query result:", result.rows);
+    console.log("Database connection successful. Sample query result:", user);
     process.exit(1);
 }
 
