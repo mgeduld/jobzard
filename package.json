@@ -10,19 +10,24 @@
     "db:migrate": "docker exec -i jobzard-postgres psql -U jobzard -d jobzard_dev < db/migrations/001_initial_schema.sql",
     "db:seed": "docker exec -i jobzard-postgres psql -U jobzard -d jobzard_dev < db/seeds/001_seed_dev_user.sql",
     "db:wait": "until docker exec jobzard-postgres pg_isready -U jobzard -d jobzard_dev; do sleep 1; done",
-    "db:reset": "docker compose down -v && docker compose up -d && npm run db:wait && npm run db:migrate && npm run db:seed"
+    "db:reset": "docker compose down -v && docker compose up -d && npm run db:wait && npm run db:migrate && npm run db:seed",
+    "db:test": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-db-connection.ts"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "next": "16.2.9",
+    "pg": "^8.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   }
 }
