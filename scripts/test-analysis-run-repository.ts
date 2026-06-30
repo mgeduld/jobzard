@@ -32,7 +32,14 @@ async function main() {
     const analysisRunParams = await createAnalysisRunParams({
         resumeId: currentResume.id, 
         jobDescriptionId: currentJobDescription.id, 
-        aiResultJson: { score: 0.85, feedback: "Good match" }, 
+        aiResultJson: {
+            fitScore: 85,
+            summary: "The resume is a strong match for the job description.",
+            strongMatches: ["Experience with TypeScript", "Familiarity with AI concepts"],
+            gaps: ["Limited experience with cloud platforms"],
+            suggestedResumeImprovements: ["Highlight cloud platform experience", "Include more AI project examples"],
+            caveats: ["Job description does not specify required years of experience"]
+        },
         modelMetadata: { modelVersion: "1.0.0" }  });
 
     console.log("Created Analysis Run Params:", analysisRunParams);

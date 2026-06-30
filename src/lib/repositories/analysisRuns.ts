@@ -1,10 +1,11 @@
 import { db } from "@/lib/db";
+import { ResumeJobAnalysis } from "@/lib/ai/types";
 
 export type AnalysisRun = {
     id: number;
     resumeId: number;
     jobDescriptionId: number;
-    aiResultJson: unknown;
+    aiResultJson: ResumeJobAnalysis;
     modelMetadata: unknown;
     createdAt: Date;
     updatedAt: Date;
@@ -13,7 +14,7 @@ export type AnalysisRun = {
 export async function createAnalysisRunParams( params: { 
     resumeId: number; 
     jobDescriptionId: number; 
-    aiResultJson: unknown; 
+    aiResultJson: ResumeJobAnalysis; 
     modelMetadata?: unknown; }): Promise<AnalysisRun> {
     const result = await db.query<AnalysisRun>(
         `INSERT INTO analysis_runs (resume_id, job_description_id, ai_result_json, model_metadata)
