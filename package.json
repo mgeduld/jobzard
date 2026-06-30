@@ -18,7 +18,8 @@
     "db:test:job-description": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-job-description-repository.ts",
     "db:test:analysis-run": "DOTENV_CONFIG_PATH=.env.local tsx scripts/test-analysis-run-repository.ts",
     "ai:test:mock": "tsx scripts/test-mock-analysis-provider.ts",
-    "app:test:analyze-fit-service": "DOTENV_CONFIG_PATH=.env.local tsx -r dotenv/config scripts/test-analyze-fit-service.ts"
+    "app:test:analyze-fit-service": "DOTENV_CONFIG_PATH=.env.local tsx -r dotenv/config scripts/test-analyze-fit-service.ts",
+    "prepare": "husky"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
@@ -34,6 +35,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "husky": "^9.1.7",
     "tsx": "^4.22.4",
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",
