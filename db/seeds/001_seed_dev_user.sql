@@ -1,0 +1,1 @@
+-- Seed one local development user

@@ -1,0 +1,2 @@
+-- Initial schema for Jobzard MVP
+-- Tables: users, resumes, job_descriptions, analysis_runs
