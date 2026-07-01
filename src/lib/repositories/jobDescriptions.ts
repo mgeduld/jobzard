@@ -49,6 +49,10 @@ export async function upsertJobDescriptionForUser(userId: number, jobText: strin
         const result = await db.query<JobDescription>(
             `INSERT INTO job_descriptions (user_id, job_text, created_at, updated_at)
             VALUES ($1, $2, NOW(), NOW())
+            ON CONFLICT (user_id)
+            DO UPDATE SET
+            job_text = EXCLUDED.job_text,
+            updated_at = NOW()
             RETURNING 
                 id, 
                 user_id AS "userId",

@@ -48,9 +48,13 @@ export async function upsertResumeForUser(userId: number, resumeText: string): P
     if (!existingResume) {
 
         const result = await db.query<Resume>(
-            `INSERT INTO resumes (user_id, resume_text, created_at, updated_at)
-            VALUES ($1, $2, NOW(), NOW())
-            RETURNING 
+            `INSERT INTO resumes (user_id, resume_text)
+             VALUES ($1, $2)
+             ON CONFLICT (user_id)
+             DO UPDATE SET
+             resume_text = EXCLUDED.resume_text,
+             updated_at = NOW()
+             RETURNING 
                 id, 
                 user_id AS "userId",
                 resume_text AS "resumeText",
@@ -75,5 +79,5 @@ export async function upsertResumeForUser(userId: number, resumeText: string): P
         [resumeText, existingResume.id]
     );
 
-    return result.rows[0];  
+    return result.rows[0];
 }
