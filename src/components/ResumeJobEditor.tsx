@@ -1,91 +1,103 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { analyzeCurrentFit, saveDocuments } from "@/app/actions/documentActions";
 import { ResumeJobAnalysis } from "@/lib/ai/types";
 
 type ResumeJobEditorProps = {
-  initialResumeText: string;
-  initialJobDescriptionText: string;
-  latestAnalysis: ResumeJobAnalysis | null;
-  canAnalyze: boolean;
+    initialResumeText: string;
+    initialJobDescriptionText: string;
+    latestAnalysis: ResumeJobAnalysis | null;
+    canAnalyze: boolean;
 };
 
 export function ResumeJobEditor({
-  initialResumeText,
-  initialJobDescriptionText,
-  latestAnalysis,
-  canAnalyze,
+    initialResumeText,
+    initialJobDescriptionText,
+    latestAnalysis,
+    canAnalyze,
 }: ResumeJobEditorProps) {
-  return (
-    <section>
-        <form action={saveDocuments}>
-        <div>
-            <label htmlFor="resumeText">Resume</label>
-            <textarea
-            id="resumeText"
-            name="resumeText"
-            defaultValue={initialResumeText}
-            rows={16}
-            />
-        </div>
+    return (
+        <section>
+            <Paper sx={{ p: 3 }} elevation={1}>
+                <Stack component="form" action={saveDocuments} spacing={3} sx={{ mb: 3 }}>
+                    <TextField
+                        label="Resume"
+                        name="resumeText"
+                        defaultValue={initialResumeText}
+                        multiline
+                        minRows={12}
+                        fullWidth
+                    />
 
-        <div>
-            <label htmlFor="jobDescriptionText">Job Description</label>
-            <textarea
-            id="jobDescriptionText"
-            name="jobDescriptionText"
-            defaultValue={initialJobDescriptionText}
-            rows={16}
-            />
-        </div>
+                    <TextField
+                        label="Job Description"
+                        name="jobDescriptionText"
+                        defaultValue={initialJobDescriptionText}
+                        multiline
+                        minRows={12}
+                        fullWidth
+                    />
 
-        <button type="submit">Save</button>
-        </form>
+                    <Button type="submit" variant="contained">
+                        Save
+                    </Button>
+                </Stack>
 
-        <form action={analyzeCurrentFit}>
-            <button type="submit" disabled={!canAnalyze}>Analyze Fit</button>
-        </form>
+                <Stack component="form" action={analyzeCurrentFit} spacing={1}>
+                    <Button type="submit" variant="contained" disabled={!canAnalyze}>
+                        Analyze Fit
+                    </Button>
 
-         {!canAnalyze && (
-              <p>Save both a resume and a job description before running analysis.</p>
-         )}
+                    {!canAnalyze && (
+                        <Typography variant="body2" color="text.secondary">
+                            Save both a resume and a job description before running analysis.
+                        </Typography>
+                    )}
+                </Stack>
+            </Paper>
 
-        {latestAnalysis && (
-            <section>
-                <h2>Latest Analysis</h2>
-                <p>
-                <strong>Fit Score:</strong> {latestAnalysis.fitScore}
-                </p>
+            {latestAnalysis && (
+                <section>
+                    <h2>Latest Analysis</h2>
+                    <p>
+                        <strong>Fit Score:</strong> {latestAnalysis.fitScore}
+                    </p>
 
-                <p>{latestAnalysis.summary}</p>
+                    <p>{latestAnalysis.summary}</p>
 
-                <h3>Strong Matches</h3>
-                <ul>
-                {latestAnalysis.strongMatches.map((item) => (
-                    <li key={item}>{item}</li>
-                ))}
-                </ul>
+                    <h3>Strong Matches</h3>
+                    <ul>
+                        {latestAnalysis.strongMatches.map((item) => (
+                            <li key={item}>{item}</li>
+                        ))}
+                    </ul>
 
-                <h3>Gaps</h3>
-                <ul>
-                {latestAnalysis.gaps.map((item) => (
-                    <li key={item}>{item}</li>
-                ))}
-                </ul>
+                    <h3>Gaps</h3>
+                    <ul>
+                        {latestAnalysis.gaps.map((item) => (
+                            <li key={item}>{item}</li>
+                        ))}
+                    </ul>
 
-                <h3>Suggested Resume Improvements</h3>
-                <ul>
-                {latestAnalysis.suggestedResumeImprovements.map((item) => (
-                    <li key={item}>{item}</li>
-                ))}
-                </ul>
+                    <h3>Suggested Resume Improvements</h3>
+                    <ul>
+                        {latestAnalysis.suggestedResumeImprovements.map((item) => (
+                            <li key={item}>{item}</li>
+                        ))}
+                    </ul>
 
-                <h3>Caveats</h3>
-                <ul>
-                {latestAnalysis.caveats.map((item) => (
-                    <li key={item}>{item}</li>
-                ))}
-                </ul>
-            </section>
-        )}
-     </section>
-  );
+                    <h3>Caveats</h3>
+                    <ul>
+                        {latestAnalysis.caveats.map((item) => (
+                            <li key={item}>{item}</li>
+                        ))}
+                    </ul>
+                </section>
+            )}
+        </section>
+    );
 }
