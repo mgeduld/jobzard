@@ -1,4 +1,6 @@
-import Box from "@mui/material/Box";
+"use client";
+
+import { useActionState } from "react";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
@@ -14,16 +16,31 @@ type ResumeJobEditorProps = {
     canAnalyze: boolean;
 };
 
+const initialActionState = {
+    status: "idle" as const,
+    message: null,
+};
+
 export function ResumeJobEditor({
     initialResumeText,
     initialJobDescriptionText,
     latestAnalysis,
     canAnalyze,
 }: ResumeJobEditorProps) {
+    const [saveState, saveAction, isSaving] = useActionState(
+        saveDocuments,
+        initialActionState,
+    );
+
+    const [analyzeState, analyzeAction, isAnalyzing] = useActionState(
+        analyzeCurrentFit,
+        initialActionState,
+    );
+
     return (
         <section>
             <Paper sx={{ p: 3 }} elevation={1}>
-                <Stack component="form" action={saveDocuments} spacing={3} sx={{ mb: 3 }}>
+                <Stack component="form" action={saveAction} spacing={3} sx={{ mb: 3 }}>
                     <TextField
                         label="Resume"
                         name="resumeText"
@@ -42,15 +59,33 @@ export function ResumeJobEditor({
                         fullWidth
                     />
 
-                    <Button type="submit" variant="contained">
-                        Save
+                    <Button type="submit" variant="contained" disabled={isSaving}>
+                        {isSaving ? "Saving..." : "Save"}
                     </Button>
+
+                    {saveState.message && (
+                        <Typography
+                            variant="body2"
+                            color={saveState.status === "error" ? "error" : "success.main"}
+                        >
+                            {saveState.message}
+                        </Typography>
+                    )}
                 </Stack>
 
-                <Stack component="form" action={analyzeCurrentFit} spacing={1}>
-                    <Button type="submit" variant="contained" disabled={!canAnalyze}>
-                        Analyze Fit
+                <Stack component="form" action={analyzeAction} spacing={1}>
+                    <Button type="submit" variant="contained" disabled={!canAnalyze || isSaving}>
+                        {isAnalyzing ? "Analyzing..." : "Analyze Fit"}
                     </Button>
+
+                    {analyzeState.message && (
+                        <Typography
+                            variant="body2"
+                            color={analyzeState.status === "error" ? "error" : "success.main"}
+                        >
+                            {analyzeState.message}
+                        </Typography>
+                    )}
 
                     {!canAnalyze && (
                         <Typography variant="body2" color="text.secondary">
