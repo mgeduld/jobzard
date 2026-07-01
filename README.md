@@ -22,6 +22,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 The project depends on postgres. See ./docker-compose.yml. Make sure it's up and running with `docker compose up -d`.
 
+## Local Database Workflow
+
+The app uses two local Postgres databases:
+
+- `jobzard_dev` for manual development
+- `jobzard_test` for automated tests
+
+Useful commands:
+
+- `npm run db:reset` resets the development database
+- `npm run db:test:reset` resets the test database
+- `npm run test:run` runs the automated test suite
+
 ---
 
 # jobzard
