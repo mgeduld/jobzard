@@ -1,21 +1,18 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getUserByUsername } from "@/lib/repositories/users";
 import { upsertResumeForUser } from "@/lib/repositories/resumes";
 import { upsertJobDescriptionForUser } from "@/lib/repositories/jobDescriptions";
 import { getCurrentResumeForUser } from "@/lib/repositories/resumes";
 import { getCurrentJobDescriptionForUser } from "@/lib/repositories/jobDescriptions";
-import { MockAnalysisProvider } from "@/lib/ai/providers/mockAnalysisProvider";
+import { getAnalysisProvider } from "@/lib/ai/providers/getAnalysisProvider";
 import { analyzeFit } from "@/lib/services/analyzeFit";
 
 export type DocumentActionState = {
   status: "idle" | "success" | "error";
   message: string | null;
 };
-
-const mockAnalysisProvider = new MockAnalysisProvider();
 
 export async function saveDocuments(
   _previousState: DocumentActionState,
@@ -69,16 +66,24 @@ export async function analyzeCurrentFit(
     };
   }
 
-  await analyzeFit({
-    resumeId: resume.id,
-    jobDescriptionId: jobDescription.id,
-    provider: mockAnalysisProvider,
-  });
+  try {
+    await analyzeFit({
+      resumeId: resume.id,
+      jobDescriptionId: jobDescription.id,
+      provider: getAnalysisProvider(),
+    });
 
-  revalidatePath("/");
+    revalidatePath("/");
 
-  return {
-    status: "success",
-    message: "Analysis complete.",
-  };
-}
+    return {
+      status: "success",
+      message: "Analysis complete.",
+    };
+  } catch (error) {
+    console.error("Error occurred while analyzing fit:", error);
+    return {
+      status: "error",
+      message: "The AI provider returned an invalid response. Please try again.",
+    };
+  }
+};

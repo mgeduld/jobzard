@@ -4,6 +4,7 @@ import type {
   AnalyzeResumeForJobResult,
 } from "@/lib/ai/providers/types";
 import type { ResumeJobAnalysis } from "@/lib/ai/types";
+import { resumeJobAnalysisSchema } from "@/lib/ai/types";
 
 type OllamaGenerateResponse = {
   response: string;
@@ -11,6 +12,44 @@ type OllamaGenerateResponse = {
   total_duration?: number;
   prompt_eval_count?: number;
   eval_count?: number;
+};
+
+const resumeJobAnalysisJsonSchema = {
+  type: "object",
+  properties: {
+    fitScore: {
+      type: "number",
+      minimum: 0,
+      maximum: 100,
+    },
+    summary: {
+      type: "string",
+    },
+    strongMatches: {
+      type: "array",
+      items: { type: "string" },
+    },
+    gaps: {
+      type: "array",
+      items: { type: "string" },
+    },
+    suggestedResumeImprovements: {
+      type: "array",
+      items: { type: "string" },
+    },
+    caveats: {
+      type: "array",
+      items: { type: "string" },
+    },
+  },
+  required: [
+    "fitScore",
+    "summary",
+    "strongMatches",
+    "gaps",
+    "suggestedResumeImprovements",
+    "caveats",
+  ],
 };
 
 function buildPrompt(input: AnalyzeResumeForJobInput): string {
@@ -42,18 +81,8 @@ ${input.jobDescriptionText}
 }
 
 function parseAnalysisResponse(responseText: string): ResumeJobAnalysis {
-  const parsed = JSON.parse(responseText) as ResumeJobAnalysis;
-
-  // Minimal validation for now. We'll improve this later.
-  if (typeof parsed.fitScore !== "number") {
-    throw new Error("Ollama response missing numeric fitScore");
-  }
-
-  if (typeof parsed.summary !== "string") {
-    throw new Error("Ollama response missing summary");
-  }
-
-  return parsed;
+  const parsed = JSON.parse(responseText);
+  return resumeJobAnalysisSchema.parse(parsed);
 }
 
 export const ollamaAnalysisProvider: AnalysisProvider = {
@@ -72,7 +101,7 @@ export const ollamaAnalysisProvider: AnalysisProvider = {
         model,
         prompt: buildPrompt(input),
         stream: false,
-        format: "json",
+        format: resumeJobAnalysisJsonSchema,
       }),
     });
 
@@ -81,6 +110,7 @@ export const ollamaAnalysisProvider: AnalysisProvider = {
     }
 
     const data = (await response.json()) as OllamaGenerateResponse;
+    console.log("Raw Ollama response:", data.response);
     const analysis = parseAnalysisResponse(data.response);
 
     return {
