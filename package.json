@@ -21,6 +21,7 @@
     "db:test:seed": "docker exec -i jobzard-postgres psql -U jobzard -d jobzard_test < db/seeds/001_seed_dev_user.sql",
     "db:test:reset": "docker exec -i jobzard-postgres psql -U jobzard -d postgres -c \"DROP DATABASE IF EXISTS jobzard_test\" && docker exec -i jobzard-postgres createdb -U jobzard jobzard_test && npm run db:test:migrate && npm run db:test:seed",
     "ai:test:mock": "tsx scripts/test-mock-analysis-provider.ts",
+    "ai:test:ollama": "DOTENV_CONFIG_PATH=.env.local tsx -r dotenv/config scripts/test-ollama-analysis-provider.ts",
     "app:test:analyze-fit-service": "DOTENV_CONFIG_PATH=.env.local tsx -r dotenv/config scripts/test-analyze-fit-service.ts",
     "prepare": "husky"
   },
