@@ -13,6 +13,9 @@ export default async function Home() {
 
   const resume = await getCurrentResumeForUser(user.id);
   const jobDescription = await getCurrentJobDescriptionForUser(user.id);
+  const canAnalyze =
+    Boolean(resume?.resumeText.trim()) &&
+    Boolean(jobDescription?.jobText.trim());
   const latestAnalysis =
   resume && jobDescription
     ? await getLatestAnalysisRunForResumeAndJobDescription({
@@ -29,6 +32,7 @@ export default async function Home() {
         initialResumeText={resume?.resumeText ?? ""}
         initialJobDescriptionText={jobDescription?.jobText ?? ""}
         latestAnalysis={latestAnalysis?.aiResultJson ?? null}
+        canAnalyze={canAnalyze}
       />
     </main>
   );

@@ -5,12 +5,14 @@ type ResumeJobEditorProps = {
   initialResumeText: string;
   initialJobDescriptionText: string;
   latestAnalysis: ResumeJobAnalysis | null;
+  canAnalyze: boolean;
 };
 
 export function ResumeJobEditor({
   initialResumeText,
   initialJobDescriptionText,
   latestAnalysis,
+  canAnalyze,
 }: ResumeJobEditorProps) {
   return (
     <section>
@@ -39,8 +41,12 @@ export function ResumeJobEditor({
         </form>
 
         <form action={analyzeCurrentFit}>
-            <button type="submit">Analyze Fit</button>
+            <button type="submit" disabled={!canAnalyze}>Analyze Fit</button>
         </form>
+
+         {!canAnalyze && (
+              <p>Save both a resume and a job description before running analysis.</p>
+         )}
 
         {latestAnalysis && (
             <section>

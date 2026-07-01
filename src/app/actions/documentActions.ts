@@ -38,8 +38,11 @@ export async function analyzeCurrentFit() {
   const resume = await getCurrentResumeForUser(user.id);
   const jobDescription = await getCurrentJobDescriptionForUser(user.id);
 
-  if (!resume || !jobDescription) {
-    throw new Error("Resume and job description must both exist before analysis");
+  if (
+    !resume?.resumeText.trim() ||
+    !jobDescription?.jobText.trim()
+  ) {
+    throw new Error("Resume and job description must both be saved before analysis");
   }
 
   await analyzeFit({
